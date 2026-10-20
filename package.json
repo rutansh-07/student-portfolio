@@ -5,9 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "server": "node task-manager-api/server.js",
+    "benchmark": "node task-manager-api/benchmark.js",
     "build": "vite build",
     "lint": "oxlint",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "npm --prefix task-manager-api test"
   },
   "dependencies": {
     "react": "^19.2.7",

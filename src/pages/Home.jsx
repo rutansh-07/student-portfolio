@@ -20,7 +20,7 @@ function Home() {
   return (
     <div className="container">
 
-      <Header name="Jatin Chandani" />
+      <Header name="Rutansh Govardhan" />
 
       <div className="card">
         <About />

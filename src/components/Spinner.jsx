@@ -1,17 +1,10 @@
-function Spinner(){
-
-    return(
-
+function Spinner({ message = "Loading..." }) {
+    return (
         <div className="spinner-container">
-
             <div className="spinner"></div>
-
-            <h2>Loading Repositories...</h2>
-
+            <h2>{message}</h2>
         </div>
-
     );
-
 }
 
 export default Spinner;

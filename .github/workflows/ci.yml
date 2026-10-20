@@ -1,0 +1,58 @@
+# .github/workflows/ci.yml
+# Practical 12: CI/CD Pipeline with GitHub Actions
+# Automates testing, linting, building, and reporting pass/fail status on push and pull requests
+
+name: CI/CD Pipeline - Task Management & Portfolio
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build-and-test:
+    name: Build, Lint & Automated Test
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout repository code
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+
+      # Step 2: Setup Node.js environment
+      - name: ⚙️ Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      # Step 3: Install frontend & root dependencies
+      - name: 📦 Install Frontend Dependencies
+        run: npm install
+
+      # Step 4: Install backend dependencies
+      - name: 📦 Install Backend Dependencies
+        run: |
+          cd task-manager-api
+          npm install
+
+      # Step 5: Build frontend production bundle
+      - name: 🏗️ Build Frontend
+        run: npm run build
+
+      # Step 6: Run automated tests
+      - name: 🧪 Run Automated Tests
+        run: |
+          cd task-manager-api
+          npm test
+
+      # Step 7: Report status
+      - name: 📢 Report CI/CD Status
+        if: always()
+        run: |
+          if [ "${{ job.status }}" = "success" ]; then
+            echo "✅ Pipeline Succeeded: All builds, lints, and tests passed!"
+          else
+            echo "❌ Pipeline Failed: One or more steps failed during execution."
+          fi

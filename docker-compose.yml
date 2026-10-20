@@ -1,0 +1,60 @@
+version: '3.8'
+
+# Practical 11: Containerization with Docker and Docker Compose
+# Orchestrates 3 services: frontend, backend, and mongodb on an internal bridge network
+
+services:
+  # 1. MongoDB Database Service
+  mongodb:
+    image: mongo:latest
+    container_name: task-manager-mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - app-network
+
+  # 2. Node.js & Express Backend API Service
+  backend:
+    build:
+      context: ./task-manager-api
+      dockerfile: Dockerfile
+    container_name: task-manager-backend
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - MONGO_URI=mongodb://mongodb:27017/task_management_db
+      - JWT_SECRET=supersecretjwtkey_awdf_lab_2026
+    depends_on:
+      - mongodb
+    networks:
+      - app-network
+
+  # 3. React Frontend Service (Built + Served on Port 5173)
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: task-manager-frontend
+    restart: always
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_URL=http://localhost:5000
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+# Internal Docker bridge network for inter-service communication
+networks:
+  app-network:
+    driver: bridge
+
+# Persistent volume for MongoDB database files
+volumes:
+  mongo-data:

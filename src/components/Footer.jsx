@@ -4,7 +4,7 @@ function Footer() {
 
         <footer>
 
-            <p>© 2026 Jatin Chandani | Student Portfolio</p>
+            <p>© 2026 Rutansh Govardhan | Student Portfolio</p>
 
         </footer>
 

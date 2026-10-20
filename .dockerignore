@@ -1,0 +1,8 @@
+node_modules
+dist
+.git
+.gitignore
+task-manager-api
+PRACTICAL_10_REPORT.md
+PRACTICAL_11_REPORT.md
+README.md
