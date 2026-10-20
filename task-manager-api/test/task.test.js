@@ -93,7 +93,7 @@ describe('Task Management Application - Automated Test Suite', () => {
     if (process.env.FAIL_TEST === 'true') {
       assert.strictEqual('actual_failed_value', 'expected_correct_value', 'Deliberate test failure for CI/CD demonstration');
     } else {
-      assert.strictEqual(true, true, 'Test passes under normal CI/CD execution');
+      assert.strictEqual('deliberate_failure', 'expected_pass');
     }
   });
 
